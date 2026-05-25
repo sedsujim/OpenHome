@@ -87,6 +87,12 @@ This repository can be published to GitHub Pages as a static interface preview, 
 
 That means the frontend can be hosted statically, but authenticated server actions still require a deployed backend/API elsewhere.
 
+For GitHub Pages deployments, set the backend origin in `app/static/js/supabase-client.js`:
+
+```js
+const OPENHOME_API_BASE = "https://your-backend.example.com";
+```
+
 ## Roadmap
 
 ### Phase 1

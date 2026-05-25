@@ -1,4 +1,4 @@
-const API = "/api/v1";
+const API_PATH = "/api/v1";
 
 const PROP_KEYS = [
   "motd", "difficulty", "gamemode", "max-players", "pvp", "online-mode",
@@ -77,6 +77,30 @@ function displayPlanName(planValue) {
   return planValue || "OpenHome Free";
 }
 
+function appUrl(relativePath) {
+  const base = window.OPENHOME_SITE_BASE || window.location.href;
+  return new URL(relativePath, base).toString();
+}
+
+function getApiOrigin() {
+  const configured = String(window.OPENHOME_API_BASE || "").trim().replace(/\/$/, "");
+  if (configured) return configured;
+  if (["localhost", "127.0.0.1"].includes(window.location.hostname)) {
+    return window.location.origin;
+  }
+  return "";
+}
+
+function buildApiUrl(path) {
+  const origin = getApiOrigin();
+  if (!origin) {
+    throw new Error(
+      "Backend API is not configured. GitHub Pages can host the frontend, but server actions still need a deployed FastAPI backend. Set OPENHOME_API_BASE in app/static/js/supabase-client.js."
+    );
+  }
+  return `${origin}${API_PATH}${path}`;
+}
+
 async function getSession() {
   if (!hasSupabase()) return null;
   const { data, error } = await supabaseClient.auth.getSession();
@@ -112,7 +136,12 @@ async function api(path, options = {}) {
     opts.headers["Content-Type"] = "application/json";
     opts.body = JSON.stringify(opts.body);
   }
-  const response = await fetch(`${API}${path}`, opts);
+  let response;
+  try {
+    response = await fetch(buildApiUrl(path), opts);
+  } catch (error) {
+    throw new Error(error?.message || "Could not reach the backend API.");
+  }
   if (!response.ok) {
     const text = await response.text();
     throw new Error(`${response.status}: ${text || response.statusText}`);
@@ -201,6 +230,110 @@ function initPlusCtas() {
   });
 }
 
+function initLoginPageState() {
+  const params = new URLSearchParams(window.location.search);
+  const email = params.get("email");
+  const reason = params.get("reason");
+
+  if (page === "login" && email && $("login-email") && !$("login-email").value) {
+    $("login-email").value = email;
+  }
+
+  if (page === "login" && reason === "account-exists") {
+    toast("That email is already registered. Log in or reset your password.", "error");
+  }
+}
+
+function redirectToLogin(email, reason = "account-exists") {
+  const params = new URLSearchParams();
+  if (email) params.set("email", email);
+  if (reason) params.set("reason", reason);
+  window.location.href = `./login.html?${params.toString()}`;
+}
+
+async function tryExistingAccountLogin(email, password) {
+  const result = await supabaseClient.auth.signInWithPassword({ email, password });
+  if (!result.error && result.data?.session) {
+    currentUser = result.data.user || null;
+    toast("Account already exists. Signed you in.", "success");
+    window.location.href = "./servers.html";
+    return true;
+  }
+
+  const message = (result.error?.message || "").toLowerCase();
+  if (message.includes("email not confirmed")) {
+    toast("Check your inbox to confirm your email.", "success");
+    window.location.href = "./auth-confirm.html";
+    return true;
+  }
+
+  return false;
+}
+
+function initForgotPasswordForm() {
+  const form = $("forgot-password-form");
+  if (!form) return;
+
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    if (!hasSupabase()) { toast("Supabase not loaded.", "error"); return; }
+    const email = $("forgot-email").value.trim().toLowerCase();
+    if (!email) { toast("Enter your email address.", "error"); return; }
+
+    const { error } = await supabaseClient.auth.resetPasswordForEmail(email, {
+      redirectTo: appUrl("./reset-password.html"),
+    });
+    if (error) { toast(error.message, "error"); return; }
+    toast("Password reset email sent.", "success");
+  });
+}
+
+function initResetPasswordForm() {
+  const form = $("reset-password-form");
+  if (!form) return;
+
+  const status = $("reset-status");
+  const setReady = async () => {
+    const session = await getSession();
+    if (session) {
+      if (status) status.textContent = "Recovery session detected. Set your new password.";
+      return true;
+    }
+    if (status) status.textContent = "Open the recovery link from your email to set a new password.";
+    return false;
+  };
+
+  void setReady();
+
+  if (hasSupabase()) {
+    supabaseClient.auth.onAuthStateChange(async (event) => {
+      if (event === "PASSWORD_RECOVERY" || event === "SIGNED_IN") {
+        await setReady();
+      }
+    });
+  }
+
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    if (!hasSupabase()) { toast("Supabase not loaded.", "error"); return; }
+    const password = $("reset-password").value;
+    const confirm = $("reset-password-confirm").value;
+    if (password.length < 6) { toast("Password must be at least 6 characters.", "error"); return; }
+    if (password !== confirm) { toast("Passwords do not match.", "error"); return; }
+
+    const session = await getSession();
+    if (!session) {
+      toast("Open the password recovery link from your email first.", "error");
+      return;
+    }
+
+    const { error } = await supabaseClient.auth.updateUser({ password });
+    if (error) { toast(error.message, "error"); return; }
+    toast("Password updated. You can log in now.", "success");
+    window.location.href = "./login.html";
+  });
+}
+
 function initAuthForms() {
   const loginForm = $("login-form");
   if (loginForm) {
@@ -227,7 +360,10 @@ function initAuthForms() {
 
       const { data, error } = await supabaseClient.auth.signUp({
         email, password,
-        options: { data: { name } },
+        options: {
+          data: { name },
+          emailRedirectTo: appUrl("./auth-confirm.html"),
+        },
       });
       if (error) { toast(error.message, "error"); return; }
 
@@ -235,6 +371,14 @@ function initAuthForms() {
         currentUser = data.user;
         toast("Account created. Welcome!", "success");
         window.location.href = "./servers.html";
+        return;
+      }
+
+      const signedIn = await tryExistingAccountLogin(email, password);
+      if (signedIn) return;
+
+      if (Array.isArray(data.user?.identities) && data.user.identities.length === 0) {
+        redirectToLogin(email);
         return;
       }
 
@@ -499,15 +643,17 @@ function appendConsoleLine(text, type = "info") {
 async function connectConsole() {
   if (!$("console-log")) return;
   const token = await getAccessToken();
-  const scheme = location.protocol === "https:" ? "wss" : "ws";
   const query = token ? `?access_token=${encodeURIComponent(token)}` : "";
   const path = activeServerId
-    ? `/api/v1/servers/${activeServerId}/console`
-    : "/api/v1/ws/console";
-  const url = `${scheme}://${location.host}${path}${query}`;
+    ? `/servers/${activeServerId}/console`
+    : "/ws/console";
   const wsStatus = $("ws-status");
 
   try {
+    const endpoint = new URL(buildApiUrl(path));
+    endpoint.protocol = endpoint.protocol === "https:" ? "wss:" : "ws:";
+    endpoint.search = query ? query.slice(1) : "";
+    const url = endpoint.toString();
     consoleWs = new WebSocket(url);
   } catch (error) {
     if (wsStatus) wsStatus.textContent = "unavailable";
@@ -718,8 +864,11 @@ window.addEventListener("beforeunload", () => {
 (async function boot() {
   initNav();
   initPlusCtas();
+  initLoginPageState();
   await updateAuthNav();
   initAuthForms();
+  initForgotPasswordForm();
+  initResetPasswordForm();
 
   const session = await getSession();
   if (session && (page === "login" || page === "register")) {

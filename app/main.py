@@ -53,6 +53,8 @@ def create_app() -> FastAPI:
     pricing_file = static_dir / "pricing.html"
     server_detail_file = static_dir / "server-detail.html"
     auth_confirm_file = static_dir / "auth-confirm.html"
+    forgot_password_file = static_dir / "forgot-password.html"
+    reset_password_file = static_dir / "reset-password.html"
 
     app = FastAPI(
         title=settings.app_name,
@@ -110,6 +112,16 @@ def create_app() -> FastAPI:
     @app.get("/auth-confirm.html", include_in_schema=False)
     async def auth_confirm_page():
         return FileResponse(auth_confirm_file)
+
+    @app.get("/forgot-password", include_in_schema=False)
+    @app.get("/forgot-password.html", include_in_schema=False)
+    async def forgot_password_page():
+        return FileResponse(forgot_password_file)
+
+    @app.get("/reset-password", include_in_schema=False)
+    @app.get("/reset-password.html", include_in_schema=False)
+    async def reset_password_page():
+        return FileResponse(reset_password_file)
 
     app.mount("/css", StaticFiles(directory=str(static_dir / "css")), name="css")
     app.mount("/js", StaticFiles(directory=str(static_dir / "js")), name="js")
