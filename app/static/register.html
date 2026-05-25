@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Create an OpenHome account." />
+  <title>Register - OpenHome</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" />
+  <link rel="stylesheet" href="./css/styles.css" />
+  <link rel="stylesheet" href="./css/animations.css" />
+</head>
+<body class="auth-page" data-page="register">
+  <div class="auth-shell">
+    <header class="topbar">
+      <div class="topbar-inner">
+        <a class="brand" href="./index.html" aria-label="OpenHome home">
+          <span class="brand-mark">CLT</span>
+          <span class="brand-copy"><strong>OpenHome</strong><small>Account Bootstrap</small></span>
+        </a>
+        <button class="nav-toggle" id="nav-toggle" type="button" aria-label="Open navigation" aria-expanded="false">Menu</button>
+        <nav class="nav" id="main-nav" aria-label="Primary navigation">
+          <a href="./index.html" data-page-link="home">Home</a>
+          <a href="./servers.html" data-page-link="servers">Servers</a>
+          <a href="./pricing.html" data-page-link="pricing">Plans</a>
+          <a href="./login.html" data-page-link="login" data-auth-link="login">Log in</a>
+          <a class="nav-cta" href="./register.html" data-page-link="register" data-auth-link="register">Register</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="auth-layout">
+        <article class="auth-card">
+          <p class="eyebrow">Initialize access</p>
+          <h1>Register</h1>
+          <p class="auth-copy">Create your account with Supabase Auth. New users default to `free`, and the backend remains the source of truth for plans.</p>
+
+          <form id="register-form" class="form-stack" autocomplete="on">
+            <label>
+              Name
+              <input id="register-name" name="name" type="text" placeholder="Steve" required />
+            </label>
+            <label>
+              Email
+              <input id="register-email" name="email" type="email" placeholder="admin@openhome.local" required />
+            </label>
+            <label>
+              Password
+              <input id="register-password" name="password" type="password" placeholder="........" minlength="6" required />
+            </label>
+            <button class="primary" type="submit">
+              <span>Create account</span>
+              <span class="material-symbols-outlined">arrow_forward</span>
+            </button>
+          </form>
+
+          <div class="separator"></div>
+
+          <div class="auth-links">
+            <a href="./login.html">Already have an account?</a>
+            <a href="./pricing.html">See plans</a>
+            <a href="./index.html">Back to home</a>
+          </div>
+        </article>
+
+        <aside class="auth-panel">
+          <p class="eyebrow">OpenHome Free</p>
+          <h2>Usable now.</h2>
+          <p class="muted">You start on OpenHome Free with 1 server, 1024 MB RAM, 2 GB storage, 10 players, plugins, custom worlds, and auto-stop enabled.</p>
+          <div class="terminal-card">
+            <div class="terminal-line"><strong>default.plan</strong><span>free</span></div>
+            <div class="terminal-line"><strong>server.limit</strong><span>1</span></div>
+            <div class="terminal-line"><strong>plus.access</strong><span>backend only</span></div>
+          </div>
+        </aside>
+      </section>
+    </main>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script defer src="./js/supabase-client.js"></script>
+  <script defer src="./js/plans.js"></script>
+  <script defer src="./js/app.js"></script>
+  <script defer src="./js/openhome-animations.js"></script>
+</body>
+</html>

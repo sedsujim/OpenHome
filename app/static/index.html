@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="OpenHome by CLT. Free Minecraft hosting with a serious black and white control surface." />
+  <title>OpenHome by CLT</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" />
+  <link rel="stylesheet" href="./css/styles.css" />
+  <link rel="stylesheet" href="./css/animations.css" />
+</head>
+<body data-page="home">
+  <div class="site-shell">
+    <header class="topbar">
+      <div class="topbar-inner">
+        <a class="brand" href="./index.html" aria-label="OpenHome home">
+          <span class="brand-mark">CLT</span>
+          <span class="brand-copy"><strong>OpenHome</strong><small>Infrastructure Interface</small></span>
+        </a>
+        <button class="nav-toggle" id="nav-toggle" type="button" aria-label="Open navigation" aria-expanded="false">Menu</button>
+        <nav class="nav" id="main-nav" aria-label="Primary navigation">
+          <a href="./index.html" data-page-link="home">Home</a>
+          <a href="./servers.html" data-page-link="servers">Servers</a>
+          <a href="./pricing.html" data-page-link="pricing">Plans</a>
+          <a href="./login.html" data-page-link="login" data-auth-link="login">Log in</a>
+          <a class="nav-cta" href="./register.html" data-page-link="register" data-auth-link="register">Register</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="app-view">
+      <section class="hero-grid terminal-grid">
+        <article class="hero-copy">
+          <p class="eyebrow">CLT infrastructure interface</p>
+          <h1>Minecraft hosting with more control.</h1>
+          <p class="lead">OpenHome Free is fully usable today: 1 server, 1024 MB RAM, 2 GB storage, 10 players, plugins, custom worlds, and a real backend-managed dashboard.</p>
+          <div class="hero-actions">
+            <a class="button primary" href="./register.html">Create your free server</a>
+            <a class="button ghost" href="./pricing.html">View plans</a>
+            <a class="button ghost" href="./servers.html">Open dashboard</a>
+          </div>
+        </article>
+
+        <aside class="surface-card">
+          <div>
+            <p class="eyebrow">Node status</p>
+            <h2 class="page-title">OpenHome Free</h2>
+            <p class="muted">Structured for real plan enforcement now, with OpenHome Plus reserved for backend-controlled activation later.</p>
+          </div>
+          <div class="terminal-card" aria-label="Plan summary">
+            <div class="terminal-line"><strong>plan</strong><span>free</span></div>
+            <div class="terminal-line"><strong>servers</strong><span>1</span></div>
+            <div class="terminal-line"><strong>ram</strong><span>1024 MB</span></div>
+            <div class="terminal-line"><strong>storage</strong><span>2 GB</span></div>
+            <div class="terminal-line"><strong>players</strong><span>10</span></div>
+            <div class="terminal-line"><strong>plus</strong><span>planned only</span></div>
+          </div>
+        </aside>
+      </section>
+
+      <section>
+        <div class="section-intro">
+          <p class="eyebrow">Why OpenHome</p>
+          <h2 class="page-title">Less lock-in. More server control.</h2>
+          <p>Stitch's CLT direction is now the baseline: black, white, grayscale, sharp layouts, technical cards, and a serious infrastructure feel.</p>
+        </div>
+        <div class="feature-grid">
+          <article class="feature-card">
+            <span class="material-symbols-outlined">dns</span>
+            <h3>Free server</h3>
+            <p class="muted">Start with a usable free tier and backend-enforced resource limits instead of fake pricing or simulated upgrades.</p>
+          </article>
+          <article class="feature-card">
+            <span class="material-symbols-outlined">terminal</span>
+            <h3>Real control surface</h3>
+            <p class="muted">Supabase auth, FastAPI endpoints, console access, and server management stay functional while the UI follows the Stitch system.</p>
+          </article>
+          <article class="feature-card">
+            <span class="material-symbols-outlined">tune</span>
+            <h3>Future-ready plans</h3>
+            <p class="muted">OpenHome Plus is a real future premium tier, but only backend or admin workflows will be allowed to activate it later.</p>
+          </article>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-intro">
+          <p class="eyebrow">Plans snapshot</p>
+          <h2 class="page-title">Free now. Plus later.</h2>
+          <p>Plus is visible as a real product direction, but there is no self-upgrade flow, fake checkout, or frontend plan mutation.</p>
+        </div>
+        <div class="preview-grid">
+          <article class="preview-card">
+            <span class="plan-chip">OpenHome Free</span>
+            <h3>Available today</h3>
+            <p>1 server, 1024 MB RAM, 2 GB storage, 10 players, plugins allowed, custom worlds allowed, and auto-stop enabled.</p>
+            <div class="button-row">
+              <a class="button primary" href="./register.html">Start free</a>
+            </div>
+          </article>
+          <article class="preview-card">
+            <span class="plan-chip">OpenHome Plus</span>
+            <h3>Future premium tier</h3>
+            <p>More servers, more RAM, more storage, longer uptime, backups, custom domains, and priority startup.</p>
+            <div class="button-row">
+              <a class="button ghost" href="./pricing.html" data-plus-cta="navigate">Upgrade to Plus</a>
+            </div>
+          </article>
+          <article class="preview-card">
+            <span class="plan-chip">Plan control</span>
+            <h3>Backend-owned activation</h3>
+            <p>Your frontend can show plans, but the backend remains the source of truth for `profiles.plan` and resource enforcement.</p>
+            <div class="button-row">
+              <a class="button ghost" href="./servers.html">See dashboard</a>
+            </div>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        <div class="footer-links">
+          <a href="./index.html">Home</a>
+          <a href="./servers.html">Servers</a>
+          <a href="./pricing.html">Plans</a>
+        </div>
+        <span>OpenHome by CLT - Stitch interface system</span>
+      </div>
+    </footer>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script defer src="./js/supabase-client.js"></script>
+  <script defer src="./js/plans.js"></script>
+  <script defer src="./js/app.js"></script>
+  <script defer src="./js/openhome-animations.js"></script>
+</body>
+</html>

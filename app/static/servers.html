@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Manage your OpenHome servers." />
+  <title>Servers - OpenHome</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" />
+  <link rel="stylesheet" href="./css/styles.css" />
+  <link rel="stylesheet" href="./css/animations.css" />
+</head>
+<body data-page="servers">
+  <div class="site-shell">
+    <header class="topbar">
+      <div class="topbar-inner">
+        <a class="brand" href="./index.html" aria-label="OpenHome home">
+          <span class="brand-mark">CLT</span>
+          <span class="brand-copy"><strong>OpenHome</strong><small>Server Console</small></span>
+        </a>
+        <button class="nav-toggle" id="nav-toggle" type="button" aria-label="Open navigation" aria-expanded="false">Menu</button>
+        <nav class="nav" id="main-nav" aria-label="Primary navigation">
+          <a href="./index.html" data-page-link="home">Home</a>
+          <a href="./servers.html" data-page-link="servers">Servers</a>
+          <a href="./pricing.html" data-page-link="pricing">Plans</a>
+          <a href="./login.html" data-page-link="login" data-auth-link="login">Log in</a>
+          <a class="nav-cta" href="./register.html" data-page-link="register" data-auth-link="register">Register</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="app-view">
+      <div class="page-head">
+        <div>
+          <p class="eyebrow">Server inventory</p>
+          <h1 class="page-title">Your servers</h1>
+          <p class="lead">OpenHome Free is fully usable today. The backend reads your plan and enforces limits from `profiles.plan`.</p>
+        </div>
+        <div class="page-actions">
+          <button id="create-server-btn" class="primary" type="button">
+            <span class="material-symbols-outlined">add</span>
+            <span>Create server</span>
+          </button>
+          <button id="quickstart-btn" class="ghost" type="button">
+            <span class="material-symbols-outlined">bolt</span>
+            <span>Create and start</span>
+          </button>
+          <a href="./pricing.html" class="button ghost" id="upgrade-btn" data-plus-cta="navigate">Upgrade to Plus</a>
+          <button id="logout-button" class="ghost" type="button">Log out</button>
+        </div>
+      </div>
+
+      <section class="dashboard-shell">
+        <div class="server-list-panel">
+          <section class="message-card">
+            <p class="eyebrow">Plan control</p>
+            <h2>OpenHome Plus is planned, but not available yet.</h2>
+            <p class="muted">The interface can present Plus as a real future tier, but activation stays backend or admin controlled only.</p>
+          </section>
+
+          <section id="servers-grid" class="servers-grid" aria-label="Server list"></section>
+        </div>
+
+        <aside class="plan-sidebar" id="plan-banner">
+          <div>
+            <div class="plan-badge" id="plan-badge">OpenHome Free</div>
+          </div>
+
+          <div class="plan-limits" id="plan-limits">
+            <div class="limit-row">
+              <div class="limit-meta"><span>Servers</span><span><strong id="servers-used">0</strong> / <strong id="servers-max">1</strong></span></div>
+              <div class="limit-track"><div class="limit-fill" style="width:100%"></div></div>
+            </div>
+            <div class="limit-row">
+              <div class="limit-meta"><span>RAM</span><span id="ram-limit">1024 MB</span></div>
+              <div class="limit-track"><div class="limit-fill" style="width:60%"></div></div>
+            </div>
+            <div class="limit-row">
+              <div class="limit-meta"><span>Storage</span><span id="storage-limit">2 GB</span></div>
+              <div class="limit-track"><div class="limit-fill" style="width:30%"></div></div>
+            </div>
+            <div class="limit-row">
+              <div class="limit-meta"><span>Auto-stop</span><span id="auto-stop">10 min</span></div>
+              <div class="limit-track"><div class="limit-fill" style="width:100%"></div></div>
+            </div>
+          </div>
+
+          <section class="note-card">
+            <p class="eyebrow">Free tier</p>
+            <p class="muted">Plugins allowed, custom worlds allowed, and no frontend bypass of plan enforcement.</p>
+          </section>
+
+          <section class="note-card">
+            <p class="eyebrow">Plus</p>
+            <p class="muted">More servers, more RAM, more storage, longer uptime, backups, custom domains, and priority startup when backend support arrives.</p>
+            <a href="./pricing.html" class="button ghost" data-plus-cta="navigate">View Plus details</a>
+          </section>
+        </aside>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        <div class="footer-links">
+          <a href="./index.html">Home</a>
+          <a href="./pricing.html">Plans</a>
+        </div>
+        <span>Backend-enforced plans. Stitch-driven interface.</span>
+      </div>
+    </footer>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script defer src="./js/supabase-client.js"></script>
+  <script defer src="./js/plans.js"></script>
+  <script defer src="./js/app.js"></script>
+  <script defer src="./js/openhome-animations.js"></script>
+</body>
+</html>

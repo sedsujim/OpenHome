@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Manage a Minecraft server in OpenHome." />
+  <title>Server - OpenHome</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" />
+  <link rel="stylesheet" href="./css/styles.css" />
+  <link rel="stylesheet" href="./css/animations.css" />
+</head>
+<body data-page="server-detail">
+  <div class="site-shell">
+    <header class="topbar">
+      <div class="topbar-inner">
+        <a class="brand" href="./index.html" aria-label="OpenHome home">
+          <span class="brand-mark">CLT</span>
+          <span class="brand-copy"><strong>OpenHome</strong><small>Server Control Surface</small></span>
+        </a>
+        <button class="nav-toggle" id="nav-toggle" type="button" aria-label="Open navigation" aria-expanded="false">Menu</button>
+        <nav class="nav" id="main-nav" aria-label="Primary navigation">
+          <a href="./index.html" data-page-link="home">Home</a>
+          <a href="./servers.html" data-page-link="servers">Servers</a>
+          <a href="./pricing.html" data-page-link="pricing">Plans</a>
+          <a href="./login.html" data-page-link="login" data-auth-link="login">Log in</a>
+          <a class="nav-cta" href="./register.html" data-page-link="register" data-auth-link="register">Register</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="app-view detail-shell">
+      <section class="page-head">
+        <div>
+          <p class="eyebrow" id="server-detail-kicker">Server</p>
+          <h1 class="server-title" id="server-detail-name">Loading...</h1>
+          <p class="lead" id="server-detail-meta">Fetching server details.</p>
+        </div>
+        <div class="page-actions">
+          <button id="start-server" class="primary" type="button"><span class="material-symbols-outlined">play_arrow</span><span>Start</span></button>
+          <button id="stop-server" class="ghost" type="button"><span class="material-symbols-outlined">stop</span><span>Stop</span></button>
+          <button id="restart-server" class="ghost" type="button"><span class="material-symbols-outlined">restart_alt</span><span>Restart</span></button>
+          <button id="kill-server" class="danger" type="button"><span class="material-symbols-outlined">block</span><span>Kill</span></button>
+          <a class="button ghost" href="./servers.html">Back to servers</a>
+        </div>
+      </section>
+
+      <section class="stats-grid" aria-label="Server stats">
+        <article class="stat-card">
+          <div>
+            <span class="stat-label">Status</span>
+            <div class="stat-value"><span id="status-badge" class="status-badge status-stopped">stopped</span></div>
+          </div>
+          <span class="material-symbols-outlined">memory</span>
+        </article>
+        <article class="stat-card">
+          <div>
+            <span class="stat-label">PID</span>
+            <div class="stat-value" id="status-pid">-</div>
+          </div>
+          <span class="material-symbols-outlined">chip_extraction</span>
+        </article>
+        <article class="stat-card">
+          <div>
+            <span class="stat-label">Players</span>
+            <div class="stat-value" id="status-players">-</div>
+          </div>
+          <span class="material-symbols-outlined">group</span>
+        </article>
+        <article class="stat-card">
+          <div>
+            <span class="stat-label">Uptime</span>
+            <div class="stat-value" id="status-uptime">-</div>
+            <p class="stat-note" id="status-version">Minecraft</p>
+          </div>
+          <span class="material-symbols-outlined">schedule</span>
+        </article>
+      </section>
+
+      <section class="workspace-grid">
+        <div class="detail-main">
+          <article class="panel console-panel">
+            <div class="panel-header">
+              <div>
+                <p class="eyebrow">Server console</p>
+                <h3>Live output</h3>
+                <p class="muted">Watch logs and send commands without leaving the control surface.</p>
+              </div>
+              <span id="ws-status" class="chip">offline</span>
+            </div>
+            <pre id="console-log" class="console">Waiting for console...</pre>
+            <form id="console-form" class="console-form">
+              <input id="console-command" type="text" placeholder="Send command..." autocomplete="off" />
+              <button class="primary" type="submit">Send</button>
+            </form>
+          </article>
+
+          <section class="tool-grid">
+            <article class="upload-box">
+              <span class="material-symbols-outlined">upload_file</span>
+              <h3>Upload world</h3>
+              <p class="muted">Import an existing world backup for this server.</p>
+              <input id="world-file" type="file" accept=".zip" />
+              <button id="upload-world" class="ghost" type="button">Upload world</button>
+            </article>
+            <article class="upload-box">
+              <span class="material-symbols-outlined">extension</span>
+              <h3>Plugins</h3>
+              <p class="muted">Upload plugin jars without replacing the backend workflow.</p>
+              <input id="plugin-file" type="file" accept=".jar" />
+              <button id="upload-plugin" class="ghost" type="button">Upload plugin</button>
+            </article>
+            <article class="upload-box">
+              <span class="material-symbols-outlined">lan</span>
+              <h3>Tunnel and DNS</h3>
+              <p class="muted">Current connectivity status and network controls.</p>
+              <div class="inline-stack">
+                <div class="terminal-card">
+                  <div class="terminal-line"><strong>tunnel</strong><span id="tunnel-status">-</span></div>
+                  <div class="terminal-line"><strong>dns</strong><span id="dns-status">-</span></div>
+                </div>
+                <div class="inline-actions">
+                  <button id="start-tunnel" class="primary" type="button">Start tunnel</button>
+                  <button id="stop-tunnel" class="ghost" type="button">Stop tunnel</button>
+                  <button id="update-dns" class="ghost" type="button">Update DNS</button>
+                </div>
+              </div>
+            </article>
+          </section>
+        </div>
+
+        <aside class="panel">
+          <div class="panel-header">
+            <div>
+              <p class="eyebrow">Configuration</p>
+              <h3>Server properties</h3>
+              <p class="muted">Core parameters remain functional while the visual layer follows the Stitch CLT system.</p>
+            </div>
+            <button id="reload-properties" class="ghost" type="button">Reload</button>
+          </div>
+          <form id="properties-form" class="property-grid"></form>
+          <div class="separator"></div>
+          <button id="save-properties" class="primary" type="button">Save configuration</button>
+        </aside>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        <div class="footer-links">
+          <a href="./servers.html">Servers</a>
+          <a href="./pricing.html">Plans</a>
+        </div>
+        <span>Operational controls stay wired to FastAPI.</span>
+      </div>
+    </footer>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script defer src="./js/supabase-client.js"></script>
+  <script defer src="./js/plans.js"></script>
+  <script defer src="./js/app.js"></script>
+  <script defer src="./js/openhome-animations.js"></script>
+</body>
+</html>

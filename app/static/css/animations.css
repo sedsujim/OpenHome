@@ -1,0 +1,222 @@
+
+/* OpenHome animation layer
+   Minimal, CLT-style motion system. No external animation libraries. */
+:root {
+  --oh-duration-fast: 160ms;
+  --oh-duration: 420ms;
+  --oh-duration-slow: 720ms;
+  --oh-ease: cubic-bezier(.16, 1, .3, 1);
+  --oh-border: rgba(255,255,255,.35);
+  --oh-border-strong: rgba(255,255,255,.85);
+}
+
+html.oh-motion-ready body {
+  opacity: 0;
+  animation: oh-page-fade var(--oh-duration) var(--oh-ease) forwards;
+}
+
+@keyframes oh-page-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.oh-reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  animation: oh-reveal var(--oh-duration-slow) var(--oh-ease) forwards;
+  animation-delay: var(--oh-delay, 0ms);
+  will-change: transform, opacity;
+}
+
+@keyframes oh-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+    filter: blur(2px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+.oh-soft-scale {
+  opacity: 0;
+  transform: scale(.985);
+  animation: oh-soft-scale var(--oh-duration-slow) var(--oh-ease) forwards;
+  animation-delay: var(--oh-delay, 0ms);
+}
+
+@keyframes oh-soft-scale {
+  from { opacity: 0; transform: scale(.985); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.oh-card-motion {
+  position: relative;
+  transition:
+    transform 220ms var(--oh-ease),
+    border-color 220ms var(--oh-ease),
+    background-color 220ms var(--oh-ease),
+    opacity 220ms var(--oh-ease);
+}
+
+.oh-card-motion::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  border: 1px solid rgba(255,255,255,.12);
+  transition: opacity 220ms var(--oh-ease);
+}
+
+.oh-card-motion:hover {
+  transform: translateY(-3px);
+  border-color: var(--oh-border-strong) !important;
+}
+
+.oh-card-motion:hover::after {
+  opacity: 1;
+}
+
+.oh-interactive {
+  transition:
+    transform var(--oh-duration-fast) var(--oh-ease),
+    border-color var(--oh-duration-fast) var(--oh-ease),
+    background-color var(--oh-duration-fast) var(--oh-ease),
+    color var(--oh-duration-fast) var(--oh-ease),
+    opacity var(--oh-duration-fast) var(--oh-ease);
+}
+
+.oh-interactive:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+.oh-interactive:active:not(:disabled) {
+  transform: translateY(0) scale(.99);
+}
+
+.oh-interactive:disabled {
+  transform: none !important;
+}
+
+input, textarea, select {
+  transition:
+    border-color 180ms var(--oh-ease),
+    background-color 180ms var(--oh-ease),
+    box-shadow 180ms var(--oh-ease),
+    color 180ms var(--oh-ease) !important;
+}
+
+input:focus, textarea:focus, select:focus {
+  box-shadow: 0 0 0 1px rgba(255,255,255,.28) !important;
+}
+
+.oh-status-pulse {
+  position: relative;
+}
+
+.oh-status-pulse::before {
+  content: "";
+  display: inline-block;
+  width: .48rem;
+  height: .48rem;
+  margin-right: .42rem;
+  background: currentColor;
+  border-radius: 999px;
+  vertical-align: middle;
+  opacity: .75;
+  animation: oh-status-pulse 1.8s ease-in-out infinite;
+}
+
+@keyframes oh-status-pulse {
+  0%, 100% { opacity: .35; transform: scale(.8); }
+  50% { opacity: 1; transform: scale(1); }
+}
+
+.oh-console-line {
+  opacity: 0;
+  transform: translateX(-6px);
+  animation: oh-console-line 420ms var(--oh-ease) forwards;
+  animation-delay: var(--oh-delay, 0ms);
+}
+
+@keyframes oh-console-line {
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.oh-terminal-cursor::after {
+  content: "_";
+  margin-left: 4px;
+  opacity: .9;
+  animation: oh-cursor-blink 1s steps(2, start) infinite;
+}
+
+@keyframes oh-cursor-blink {
+  0%, 45% { opacity: 1; }
+  46%, 100% { opacity: 0; }
+}
+
+.oh-skeleton {
+  position: relative;
+  overflow: hidden;
+  background: rgba(255,255,255,.06) !important;
+}
+
+.oh-skeleton::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.08), transparent);
+  animation: oh-skeleton 1.4s infinite;
+}
+
+@keyframes oh-skeleton {
+  to { transform: translateX(100%); }
+}
+
+.oh-nav-link {
+  position: relative;
+}
+
+.oh-nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -4px;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 180ms var(--oh-ease);
+  opacity: .75;
+}
+
+.oh-nav-link:hover::after {
+  transform: scaleX(1);
+}
+
+.oh-page-exit {
+  animation: oh-page-exit 160ms ease-in forwards !important;
+}
+
+@keyframes oh-page-exit {
+  to { opacity: 0; transform: translateY(4px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 1ms !important;
+  }
+  .oh-card-motion:hover,
+  .oh-interactive:hover:not(:disabled) {
+    transform: none !important;
+  }
+}

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Confirm your OpenHome account email." />
+  <title>Confirm email - OpenHome</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" />
+  <link rel="stylesheet" href="./css/styles.css" />
+  <link rel="stylesheet" href="./css/animations.css" />
+</head>
+<body class="auth-page" data-page="auth-confirm">
+  <div class="auth-shell">
+    <header class="topbar">
+      <div class="topbar-inner">
+        <a class="brand" href="./index.html" aria-label="OpenHome home">
+          <span class="brand-mark">CLT</span>
+          <span class="brand-copy"><strong>OpenHome</strong><small>Email Confirmation</small></span>
+        </a>
+        <button class="nav-toggle" id="nav-toggle" type="button" aria-label="Open navigation" aria-expanded="false">Menu</button>
+        <nav class="nav" id="main-nav" aria-label="Primary navigation">
+          <a href="./index.html" data-page-link="home">Home</a>
+          <a href="./servers.html" data-page-link="servers">Servers</a>
+          <a href="./pricing.html" data-page-link="pricing">Plans</a>
+          <a href="./login.html" data-page-link="login" data-auth-link="login">Log in</a>
+          <a class="nav-cta" href="./register.html" data-page-link="register" data-auth-link="register">Register</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="auth-layout">
+        <article class="auth-card">
+          <p class="eyebrow">Verification pending</p>
+          <h1>Check your inbox</h1>
+          <p class="auth-copy">Confirm your email to finish account activation, then return to the dashboard.</p>
+          <div class="form-stack">
+            <button id="resend-confirm" class="ghost" type="button">Resend confirmation</button>
+            <a class="button primary" href="./login.html">Go to log in</a>
+            <a href="./index.html">Back to home</a>
+          </div>
+        </article>
+
+        <aside class="auth-panel">
+          <p class="eyebrow">Status</p>
+          <h2>One step left.</h2>
+          <p class="muted">After confirmation, your profile exists with plan `free` by default. Plus remains planned and unavailable to self-activate.</p>
+          <div class="terminal-card">
+            <div class="terminal-line"><strong>status</strong><span>pending confirmation</span></div>
+            <div class="terminal-line"><strong>plan</strong><span>free</span></div>
+            <div class="terminal-line"><strong>plus</strong><span>not available yet</span></div>
+          </div>
+        </aside>
+      </section>
+    </main>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script defer src="./js/supabase-client.js"></script>
+  <script defer src="./js/plans.js"></script>
+  <script defer src="./js/app.js"></script>
+  <script defer src="./js/openhome-animations.js"></script>
+</body>
+</html>

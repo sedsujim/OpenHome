@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="OpenHome plans. Free is available now. Plus is a future premium tier." />
+  <title>Plans - OpenHome</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" />
+  <link rel="stylesheet" href="./css/styles.css" />
+  <link rel="stylesheet" href="./css/animations.css" />
+</head>
+<body data-page="pricing">
+  <div class="site-shell">
+    <header class="topbar">
+      <div class="topbar-inner">
+        <a class="brand" href="./index.html" aria-label="OpenHome home">
+          <span class="brand-mark">CLT</span>
+          <span class="brand-copy"><strong>OpenHome</strong><small>Plans Interface</small></span>
+        </a>
+        <button class="nav-toggle" id="nav-toggle" type="button" aria-label="Open navigation" aria-expanded="false">Menu</button>
+        <nav class="nav" id="main-nav" aria-label="Primary navigation">
+          <a href="./index.html" data-page-link="home">Home</a>
+          <a href="./servers.html" data-page-link="servers">Servers</a>
+          <a href="./pricing.html" data-page-link="pricing">Plans</a>
+          <a href="./login.html" data-page-link="login" data-auth-link="login">Log in</a>
+          <a class="nav-cta" href="./register.html" data-page-link="register" data-auth-link="register">Register</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="app-view">
+      <section class="section-intro">
+        <p class="eyebrow">Infrastructure for everyone</p>
+        <h1 class="page-title">Plans</h1>
+        <p>OpenHome Free is live. OpenHome Plus is the official future premium tier, but it is not purchasable or user-activatable yet.</p>
+      </section>
+
+      <section class="message-card">
+        <p class="eyebrow">Important</p>
+        <h2>No fake checkout. No fake activation.</h2>
+        <p class="muted">There is no Stripe, PayPal, MercadoPago, crypto flow, or frontend plan mutation in this milestone. When payments arrive later, only backend or webhook processes should change `profiles.plan`.</p>
+      </section>
+
+      <section class="pricing-grid" aria-label="OpenHome plans">
+        <article class="plan-card plan-free">
+          <div class="plan-header">
+            <span class="eyebrow plan-label">Active</span>
+            <h2>OpenHome Free</h2>
+            <p class="plan-price">$0 <span>/ mo</span></p>
+          </div>
+          <ul class="plan-features">
+            <li>1 Minecraft server</li>
+            <li>1024 MB RAM</li>
+            <li>2 GB storage</li>
+            <li>10 players</li>
+            <li>Plugins allowed</li>
+            <li>Custom worlds allowed</li>
+            <li>Auto-stop enabled</li>
+          </ul>
+          <div class="button-row">
+            <a class="button primary plan-cta" href="./register.html">Create your free server</a>
+          </div>
+        </article>
+
+        <article class="plan-card plan-plus">
+          <div class="plan-header">
+            <span class="eyebrow plan-label">Future premium tier</span>
+            <h2>OpenHome Plus</h2>
+            <p class="plan-price plan-price-muted">Planned</p>
+          </div>
+          <ul class="plan-features">
+            <li>More servers</li>
+            <li>More RAM</li>
+            <li>More storage</li>
+            <li>Longer uptime</li>
+            <li>Backups</li>
+            <li>Custom domains</li>
+            <li>Priority startup</li>
+          </ul>
+          <div class="button-row">
+            <button class="button ghost plan-cta coming-soon" type="button" data-plus-cta="message">Upgrade to Plus</button>
+          </div>
+        </article>
+      </section>
+
+      <section class="comparison-table" aria-label="Plan comparison">
+        <div class="comp-row comp-header">
+          <span class="comp-feature">Feature</span>
+          <span>Free</span>
+          <span>Plus</span>
+        </div>
+        <div class="comp-row">
+          <span class="comp-feature">Servers</span>
+          <span>1</span>
+          <span>More</span>
+        </div>
+        <div class="comp-row">
+          <span class="comp-feature">RAM</span>
+          <span>1024 MB</span>
+          <span>More</span>
+        </div>
+        <div class="comp-row">
+          <span class="comp-feature">Storage</span>
+          <span>2 GB</span>
+          <span>More</span>
+        </div>
+        <div class="comp-row">
+          <span class="comp-feature">Players</span>
+          <span>10</span>
+          <span>More</span>
+        </div>
+        <div class="comp-row">
+          <span class="comp-feature">Plugins</span>
+          <span data-check="yes">Yes</span>
+          <span data-check="yes">Yes</span>
+        </div>
+        <div class="comp-row">
+          <span class="comp-feature">Custom worlds</span>
+          <span data-check="yes">Yes</span>
+          <span data-check="yes">Yes</span>
+        </div>
+        <div class="comp-row">
+          <span class="comp-feature">Auto-stop / uptime</span>
+          <span>Enabled</span>
+          <span>Longer uptime</span>
+        </div>
+        <div class="comp-row">
+          <span class="comp-feature">Backups</span>
+          <span data-check="no">No</span>
+          <span data-check="yes">Yes</span>
+        </div>
+        <div class="comp-row">
+          <span class="comp-feature">Custom domain</span>
+          <span data-check="no">No</span>
+          <span data-check="yes">Yes</span>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        <div class="footer-links">
+          <a href="./index.html">Home</a>
+          <a href="./servers.html">Servers</a>
+        </div>
+        <span>Plus is visible as a product direction, not an activation flow.</span>
+      </div>
+    </footer>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script defer src="./js/supabase-client.js"></script>
+  <script defer src="./js/plans.js"></script>
+  <script defer src="./js/app.js"></script>
+  <script defer src="./js/openhome-animations.js"></script>
+</body>
+</html>

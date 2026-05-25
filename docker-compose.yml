@@ -1,0 +1,42 @@
+services:
+  openhome:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: openhome
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./server:/opt/openhome/server
+      - ./servers:/opt/openhome/servers
+      - /var/run/docker.sock:/var/run/docker.sock
+    env_file:
+      - .env
+    environment:
+      - SERVER_DIR=/opt/openhome/server
+      - SERVERS_BASE_DIR=/opt/openhome/servers
+      - DOCKER_NETWORK=openhome-net
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/v1/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - openhome-net
+
+  playit:
+    build:
+      context: .
+      dockerfile: Dockerfile.playit
+    container_name: openhome-playit
+    restart: unless-stopped
+    network_mode: service:openhome
+    depends_on:
+      - openhome
+    profiles:
+      - tunnel
+
+networks:
+  openhome-net:
+    driver: bridge

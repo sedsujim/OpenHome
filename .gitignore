@@ -1,0 +1,41 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+
+# Env
+.env
+
+# Server runtime
+/server/*.jar
+/server/server-icon.png
+/server/eula.txt
+/server/logs/
+/server/world/
+/server/world_nether/
+/server/world_the_end/
+/server/bukkit.yml
+/server/commands.yml
+/server/banned-ips.json
+/server/banned-players.json
+/server/whitelist.json
+/server/ops.json
+/server/usercache.json
+/server/plugins/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Docker
+.docker/

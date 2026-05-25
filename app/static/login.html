@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Log in to OpenHome." />
+  <title>Log in - OpenHome</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" />
+  <link rel="stylesheet" href="./css/styles.css" />
+  <link rel="stylesheet" href="./css/animations.css" />
+</head>
+<body class="auth-page" data-page="login">
+  <div class="auth-shell">
+    <header class="topbar">
+      <div class="topbar-inner">
+        <a class="brand" href="./index.html" aria-label="OpenHome home">
+          <span class="brand-mark">CLT</span>
+          <span class="brand-copy"><strong>OpenHome</strong><small>Authentication Gateway</small></span>
+        </a>
+        <button class="nav-toggle" id="nav-toggle" type="button" aria-label="Open navigation" aria-expanded="false">Menu</button>
+        <nav class="nav" id="main-nav" aria-label="Primary navigation">
+          <a href="./index.html" data-page-link="home">Home</a>
+          <a href="./servers.html" data-page-link="servers">Servers</a>
+          <a href="./pricing.html" data-page-link="pricing">Plans</a>
+          <a href="./login.html" data-page-link="login" data-auth-link="login">Log in</a>
+          <a class="nav-cta" href="./register.html" data-page-link="register" data-auth-link="register">Register</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="auth-layout">
+        <article class="auth-card">
+          <p class="eyebrow">Authentication gateway</p>
+          <h1>Log in</h1>
+          <p class="auth-copy">Use Supabase Auth to access your dashboard and send authenticated requests to the backend.</p>
+
+          <form id="login-form" class="form-stack" autocomplete="on">
+            <label>
+              Email
+              <input id="login-email" name="email" type="email" placeholder="admin@openhome.local" required />
+            </label>
+            <label>
+              Password
+              <input id="login-password" name="password" type="password" placeholder="........" required />
+            </label>
+            <button class="primary" type="submit">
+              <span>Log in</span>
+              <span class="material-symbols-outlined">arrow_forward</span>
+            </button>
+          </form>
+
+          <div class="separator"></div>
+
+          <div class="auth-links">
+            <a href="./register.html">Register for an account</a>
+            <a href="./pricing.html">Review plans</a>
+            <a href="./index.html">Back to home</a>
+          </div>
+        </article>
+
+        <aside class="auth-panel">
+          <p class="eyebrow">Session path</p>
+          <h2>Real session. Real bearer token.</h2>
+          <p class="muted">The browser keeps a publishable Supabase session. Protected actions still go through FastAPI with the authenticated bearer token.</p>
+          <div class="terminal-card">
+            <div class="terminal-line"><strong>auth.mode</strong><span>supabase</span></div>
+            <div class="terminal-line"><strong>profiles.plan</strong><span>free</span></div>
+            <div class="terminal-line"><strong>plus</strong><span>planned only</span></div>
+          </div>
+        </aside>
+      </section>
+    </main>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script defer src="./js/supabase-client.js"></script>
+  <script defer src="./js/plans.js"></script>
+  <script defer src="./js/app.js"></script>
+  <script defer src="./js/openhome-animations.js"></script>
+</body>
+</html>
